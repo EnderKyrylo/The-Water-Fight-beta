@@ -1,5 +1,17 @@
-from panda3d.core import loadPrcFile
-loadPrcFile('Config.prc')
+import os
+import sys
+from panda3d.core import load_prc_file
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS  # PyInstaller temporary folder
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+config_file = resource_path("config.prc")
+load_prc_file(config_file)
+
 
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
@@ -32,3 +44,4 @@ def input(key):
     
 
 app.run()
+
